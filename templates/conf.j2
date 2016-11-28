@@ -1,0 +1,47 @@
+
+TARGET='{{item.target|default(backup.target)}}'
+{% if item.target_user|default(backup.target_user) %}
+TARGET_USER='{{item.target_user|default(backup.target_user)}}'
+{% endif %}
+{% if item.target_pass|default(backup.target_pass) %}
+TARGET_PASS='{{item.target_pass|default(backup.target_pass)}}'
+{% endif %}
+
+
+
+{% if item.gpg_key|default(backup.gpg_key) == 'disabled' and item.gpg_pw|default(backup.gpg_pw) %}
+# GPG_KEY='{{ item.gpg_key|default(backup.gpg_key) }}'
+{% else %}
+GPG_KEY='{{ item.gpg_key|default(backup.gpg_key) }}'
+{% endif %}
+GPG_PW='{{ item.gpg_pw|default(backup.gpg_pw) }}'
+{% if item.gpg_keys_enc|default(None) %}
+GPG_KEYS_ENC='{{item.gpg_keys_enc}}'
+{% endif %}
+{% if item.gpg_key_sign|default(None) %}
+GPG_KEY_SIGN='{{item.gpg_key_sign}}'
+{% endif %}
+{% if item.gpg_pw_sign|default(None) %}
+GPG_PW_SIGN='{{item.gpg_pw_sign}}'
+{% endif %}
+GPG_OPTS='{{item.gpg_opts|default(backup.gpg_opts)}}'
+
+
+
+{% if item.source.startswith('postgresql://') or item.source.startswith('mysql://') or item.source.startswith('mongo://') %}
+SOURCE='{{backup.work}}/{{item.name}}/dump'
+{% else %}
+SOURCE='{{item.source|default(backup.source)}}'
+{% endif %}
+
+MAX_AGE={{item.max_age|default(backup.max_age)}}
+MAX_FULL_BACKUPS={{item.max_full_backups|default(backup.max_full_backups)}}
+MAX_FULLS_WITH_INCRS={{ item.max_full_with_incr|default(backup.max_full_with_incr) }}
+MAX_FULLBKP_AGE={{ item.full_max_age|default(backup.full_max_age) }}
+DUPL_PARAMS="$DUPL_PARAMS --full-if-older-than $MAX_FULLBKP_AGE "
+VOLSIZE={{ item.volsize|default(backup.volsize) }}
+DUPL_PARAMS="$DUPL_PARAMS --volsize $VOLSIZE "
+
+
+
+VERBOSITY={{item.verbosity|default(backup.verbosity)}}
