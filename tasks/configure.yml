@@ -3,6 +3,9 @@
 - name: Ensure backup user exists
   user: name={{backup.user}}
 
+- name: Ensure backup group exists
+  user: name={{backup.group}}
+
 - name: Ensure backup directories exits
   file: path={{item}} state=directory owner={{backup.user}} group={{backup.group}}
   with_items:

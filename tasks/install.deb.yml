@@ -10,3 +10,4 @@
   - s3cmd
   - ncftp
   - duplicity
+  - lftp
