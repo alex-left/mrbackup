@@ -11,3 +11,7 @@
   - ncftp
   - duplicity
   - lftp
+  - python-paramiko
+  - python-pycryptopp
+  - python-gobject-2
+  - python-pexpect
