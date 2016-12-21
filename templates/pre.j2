@@ -8,7 +8,7 @@ WORKDIR={{backup.work}}/{{item.name}}
 {% if item.source.startswith('postgresql://') %}
 
 DBNAME={{item.source.split('postgresql://')[-1]}}
-pg_dump -U {{postgres.postgres_user}} {{ '-h ' + postgres.postgres_host  if postgres.postgres_host else ''}} {{ ('-p %s' % postgres.postgres_port)  if postgres.postgres_port else ''}} -c $DBNAME -f ${WORKDIR}/dump
+pg_dump -U {{item.postgres_user|default(postgres.postgres_user)}} {{ '-h ' + postgres.postgres_host  if postgres.postgres_host else ''}} {{ ('-p %s' % postgres.postgres_port)  if postgres.postgres_port else ''}} -c $DBNAME -f ${WORKDIR}/dump
 
 {% elif item.source.startswith('mysql://') %}
 
