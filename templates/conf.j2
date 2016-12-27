@@ -42,6 +42,9 @@ DUPL_PARAMS="$DUPL_PARAMS --full-if-older-than $MAX_FULLBKP_AGE "
 VOLSIZE={{ item.volsize|default(backup.volsize) }}
 DUPL_PARAMS="$DUPL_PARAMS --volsize $VOLSIZE "
 
+{% for param in item.extra_params|default(backup.extra_params) %}
+DUPL_PARAMS="$DUPL_PARAMS {{param}} "
+{% endfor %}
 
 
 VERBOSITY={{item.verbosity|default(backup.verbosity)}}

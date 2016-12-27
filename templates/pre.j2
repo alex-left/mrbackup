@@ -8,7 +8,7 @@ WORKDIR={{backup.work}}/{{item.name}}
 {% if item.source.startswith('postgresql://') %}
 
 DBNAME={{item.source.split('postgresql://')[-1]}}
-pg_dump -U {{item.postgres_user|default(postgres.postgres_user)}} {{ '-h ' + item.postgres_host  if item.postgres_host else ''}} {{ ('-p ' % item.postgres_port)  if item.postgres_port else ''}} -c $DBNAME -f ${WORKDIR}/dump
+pg_dump -U {{item.postgres_user|default(postgres.postgres_user)}} {{ '-h ' + item.postgres_host  if item.postgres_host else ''}} {{ ('-p ' % item.postgres_port) if item.postgres_port else ''}} -c $DBNAME -f ${WORKDIR}/dump
 
 {% elif item.source.startswith('mysql://') %}
 
@@ -19,7 +19,7 @@ mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|d
 
 # Dump the passed database
 DBNAME={{item.source.split('mysql://')[-1]}}
-mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} {{ '-h ' + item.mysql_host if item.mysql_host else ''}} {{ ('-P ' % item.mysql_port)  if item.mysql_port else ''}} $DBNAME  > ${WORKDIR}/dump
+mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} {{ '-h ' + item.mysql_host if item.mysql_host else ''}} {{ ('-P ' % item.mysql_port) if item.mysql_port else ''}} $DBNAME  > ${WORKDIR}/dump
 {% endif %}
 
 {% elif item.source.startswith('mongo://') %}
