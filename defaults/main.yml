@@ -14,7 +14,7 @@ backup:
   gpg_pw: ""
   gpg_opts: ''
 
-  source: 'file:///etc'
+  source: '/etc'
 
   target: 'file:///var/backup'
   target_user: 'root'
