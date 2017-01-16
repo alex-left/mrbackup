@@ -71,3 +71,18 @@ profiles:
   max_full_with_incr: 1
   mysql_user: root
   mysql_pass: test
+  extra_params:
+  - ""
+
+# - name: nagios_config    
+#   schedule: "* 4 * * *"  # remember quotes if use fractions. 
+#   source: '/data/containers/nagios'
+#   target: 's3://s3-eu-west-1.amazonaws.com/mrmilu-backup/devops/containers/nagios_config'
+#   target_user: 'AKIAI2GCZ3CFXGZHNHMQ'
+#   target_pass: 'rBmP3LfORtn7voCI8yCE5jhUyMceYldDBumjF6aj'
+#   max_full_backups: 5
+#   full_max_age: 7D
+#   full_max_age: 6W 
+#   max_full_with_incr: 2
+#   extra_params:
+#   - ""
