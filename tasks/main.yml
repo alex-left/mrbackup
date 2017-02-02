@@ -39,6 +39,12 @@
     name: /tmp/duplicity
     state: absent
 
+- name: create bin link for compatibility
+  file:
+    src: /usr/local/bin/duplicity
+    dest: /bin/duplicity
+    state: link
+
 - include: configure.yml
   when: not backup.remove
 
