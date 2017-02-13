@@ -19,7 +19,7 @@ mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|d
 
 # Dump the passed database
 DBNAME={{item.source.split('mysql://')[-1]}}
-mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} {{ '-h ' + item.mysql_host if item.mysql_host else ''}} {{ ('-P ' % item.mysql_port) if item.mysql_port else ''}} $DBNAME  > ${WORKDIR}/dump
+mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} -h {{item.mysql_host|default(mysql.mysql_host)}} -P {{item.mysql_port|default(mysql.mysql_port)}} $DBNAME  > ${WORKDIR}/dump
 {% endif %}
 
 {% elif item.source.startswith('mongo://') %}
