@@ -1,12 +1,12 @@
 backup:
-  download: https://launchpad.net/duplicity/0.7-series/0.7.10/+download/duplicity-0.7.10.tar.gz     
-  remove: no              
-  cron: yes               
-  user: root              
+  download: https://launchpad.net/duplicity/0.7-series/0.7.10/+download/duplicity-0.7.10.tar.gz
+  remove: no
+  cron: yes
+  user: root
   group: root
-  home: /etc/duply         
-  work: /var/duply         
-  logdir: /var/log/duply   
+  home: /etc/duply
+  work: /var/duply
+  logdir: /var/log/duply
   logrotate: yes
 
 ### default values, can be overrided in profiles
@@ -25,7 +25,7 @@ backup:
   max_full_backups: 8
   max_full_with_incr: 1
   full_max_age: 1W
-  volsize: 50 
+  volsize: 50
   verbosity: 3
   exclude: []
   extra_params: []
@@ -47,8 +47,8 @@ profiles:
 ### overrride default keys
 
 # Ex. profiles:
-#     - name: www           
-#       schedule: 0 0 * * 0 
+#     - name: www
+#       schedule: 0 0 * * 0
 #       source: /var/www
 #       max_age: 10D
 #       target: s3://my.bucket/www
@@ -60,8 +60,8 @@ profiles:
 #       source: postgresql://db_name
 #       target: s3://my.bucket/postgresql
 
-- name: testjob    
-  schedule: "*/10 * * * *"  # remember quotes if use fractions. 
+- name: testjob
+  schedule: "*/10 * * * *"  # remember quotes if use fractions.
   source: mysql://employees
   target: scp://localhost/root/backup
   target_user: root
@@ -73,16 +73,3 @@ profiles:
   mysql_pass: test
   extra_params:
   - ""
-
-# - name: nagios_config    
-#   schedule: "* 4 * * *"  # remember quotes if use fractions. 
-#   source: '/data/containers/nagios'
-#   target: 's3://s3-eu-west-1.amazonaws.com/mrmilu-backup/devops/containers/nagios_config'
-#   target_user: 'AKIAI2GCZ3CFXGZHNHMQ'
-#   target_pass: 'rBmP3LfORtn7voCI8yCE5jhUyMceYldDBumjF6aj'
-#   max_full_backups: 5
-#   full_max_age: 7D
-#   full_max_age: 6W 
-#   max_full_with_incr: 2
-#   extra_params:
-#   - ""
