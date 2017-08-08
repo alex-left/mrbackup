@@ -1,0 +1,8 @@
+---
+- name: Uninstall backup files
+  file: state=absent path={{ item }}
+  with_items:
+  - "{{backup.home}}"
+  - "{{backup.work}}"
+  - "{{backup.logdir}}"
+  - /etc/cron.d/backup

@@ -1,0 +1,52 @@
+- name: Install dependecies
+  apt: 
+    name: "{{ item }}"
+    state: "latest"
+    update_cache: "yes"
+  with_items:
+  - cron
+  - gzip
+  - python-boto
+  - s3cmd
+  - ncftp
+  - lftp
+  - python-paramiko
+  - python-pycryptopp
+  - python-gobject-2
+  - python-pexpect
+  - librsync1
+  - gnupg
+  - python-lockfile
+  - python-dev
+  - librsync-dev
+
+- name: ensure instalable path exists
+  file:
+    path: /tmp/duplicity
+    state: directory
+
+- name: download and extract duplicity
+  unarchive:
+    src: "{{ backup.download }}"
+    dest: /tmp/duplicity
+    remote_src: yes
+
+- name: install duplicity
+  shell: cd /tmp/duplicity/{{ backup.download.split('/')[-1].replace('.tar.gz', '') }} && python setup.py install
+
+- name: delete tmp files
+  file:
+    name: /tmp/duplicity
+    state: absent
+
+- name: create bin link for compatibility
+  file:
+    src: /usr/local/bin/duplicity
+    dest: /bin/duplicity
+    state: link
+
+- include: configure.yml
+  when: not backup.remove
+
+- include: remove.yml
+  when: backup.remove
