@@ -5,9 +5,7 @@ PYTHONIOENCODING=utf8
 
 
 # Run backups and purges
-{% for profile in profiles %}
-{% if profile.schedule|default(None) %}
-{{profile.schedule}} {{profile.user|default(backup.user)}} /bin/bash /usr/bin/duply {{backup.home}}/{{profile.name}} {{profile.action|default('backup')}} >> {{backup.logdir}}/{{profile.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{profile.name}} {{profile.action|default('purgeFull --force')}} >> {{backup.logdir}}/{{profile.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{profile.name}} {{profile.action|default('purgeIncr --force')}} >> {{backup.logdir}}/{{profile.name}}.log 2>&1
-{% endif %}
-{% endfor %}
 
+{% if profile.schedule|default(None) %}
+{{item.schedule}} {{item.user|default(backup.user)}} /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('backup')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('purgeFull --force')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('purgeIncr --force')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1
+{% endif %}
