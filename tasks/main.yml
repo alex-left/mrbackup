@@ -20,6 +20,7 @@
   - python-dev
   - librsync-dev
   - python-setuptools
+  - build-essential
 
 - name: ensure instalable path exists
   file:
@@ -38,6 +39,11 @@
 - name: delete tmp files
   file:
     name: /tmp/duplicity
+    state: absent
+
+- name: uninstall compiler (for security best-practices)
+  apt:
+    name: build-essential
     state: absent
 
 - name: create bin link for compatibility
