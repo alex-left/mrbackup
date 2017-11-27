@@ -1,5 +1,5 @@
 - name: Install dependecies
-  apt: 
+  apt:
     name: "{{ item }}"
     state: "latest"
     update_cache: "yes"
@@ -19,6 +19,7 @@
   - python-lockfile
   - python-dev
   - librsync-dev
+  - python-setuptools
 
 - name: ensure instalable path exists
   file:
