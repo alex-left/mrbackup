@@ -6,6 +6,6 @@ PYTHONIOENCODING=utf8
 
 # Run backups and purges
 
-{% if profile.schedule|default(None) %}
+{% if item.schedule|default(None) %}
 {{item.schedule}} {{item.user|default(backup.user)}} /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('backup')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('purgeFull --force')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1 && /bin/bash /usr/bin/duply {{backup.home}}/{{item.name}} {{item.action|default('purgeIncr --force')}} >> {{backup.logdir}}/{{item.name}}.log 2>&1
 {% endif %}
