@@ -34,7 +34,7 @@ lxc image delete ${CONTAINER}_backup_latest
 lxc delete ${CONTAINER}/${CONTAINER}_backup_latest
 lxc snapshot ${CONTAINER} ${CONTAINER}_backup_latest
 lxc publish ${CONTAINER}/${CONTAINER}_backup_latest --alias ${CONTAINER}_backup_latest
-lxc image export ${CONTAINER}_backup_latest ${WORKDIR}/container_image.tgz
+lxc image export ${CONTAINER}_backup_latest ${WORKDIR}/container_image
 {% endif %}
 
 {% for action in item.pre_actions|default([]) %}
