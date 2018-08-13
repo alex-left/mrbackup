@@ -1,4 +1,5 @@
 mrbackup_force_install: no
+mrbackup_duplicity_version: "0.7.10"
 backup:
   download: https://launchpad.net/duplicity/0.7-series/0.7.10/+download/duplicity-0.7.10.tar.gz
   remove: no
