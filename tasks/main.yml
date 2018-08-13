@@ -1,8 +1,8 @@
 - name: Install dependecies
+  become: yes
   apt:
     name: "{{ item }}"
-    state: "latest"
-    update_cache: "yes"
+    state: "present"
   with_items:
   - cron
   - gzip
@@ -22,38 +22,26 @@
   - python-setuptools
   - build-essential
 
-- name: ensure instalable path exists
-  file:
-    path: /tmp/duplicity
-    state: directory
+- name: check if duplicity is installed
+  register: _duplicity_status
+  shell: >
+    duplicity --version
+  failed_when: no
 
-- name: download and extract duplicity
-  unarchive:
-    src: "{{ backup.download }}"
-    dest: /tmp/duplicity
-    remote_src: yes
+- name: parse duplicity version
+  set_fact:
+    _duplicity_version: "{{ _duplicity_status.split()[1] is version(mrbackup_duplicity_version, '>=') }}"
 
-- name: install duplicity
-  shell: cd /tmp/duplicity/{{ backup.download.split('/')[-1].replace('.tar.gz', '') }} && python setup.py install
-
-- name: delete tmp files
-  file:
-    name: /tmp/duplicity
-    state: absent
+- import_tasks: install.yml
+  when: _duplicity_version or mrbackup_force_install
 
 - name: uninstall compiler (for security best-practices)
   apt:
     name: build-essential
     state: absent
 
-- name: create bin link for compatibility
-  file:
-    src: /usr/local/bin/duplicity
-    dest: /bin/duplicity
-    state: link
-
-- include: configure.yml
+- import_tasks: configure.yml
   when: not backup.remove
 
-- include: remove.yml
+- import_tasks: remove.yml
   when: backup.remove

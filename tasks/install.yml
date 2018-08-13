@@ -1,0 +1,28 @@
+- name: ensure instalable path exists
+  file:
+    path: /tmp/duplicity
+    state: directory
+
+- name: download and extract duplicity
+  unarchive:
+    src: "{{ backup.download }}"
+    dest: /tmp/duplicity
+    remote_src: yes
+
+- name: install duplicity
+  become: yes
+  shell: >
+    cd /tmp/duplicity/{{ backup.download.split('/')[-1].replace('.tar.gz', '') }} &&
+    python setup.py install
+
+- name: delete tmp files
+  file:
+    name: /tmp/duplicity
+    state: absent
+
+- name: create bin link for compatibility
+  become: yes
+  file:
+    src: /usr/local/bin/duplicity
+    dest: /bin/duplicity
+    state: link

@@ -1,6 +1,6 @@
 ## Description
 
-Ansible role to automate backups, using duplicity and duply for llinux systems.
+Ansible role to automate backups, using duplicity and duply for linux systems.
 Tested in debian-like systems.
 
 ## features
@@ -63,7 +63,7 @@ profiles:
 ### overrride default keys
 
 # Ex. profiles:
-#     - name: www           
+#     - name: www
 #       schedule: 0 0 * * 0
 #       source: /var/www
 #       max_age: 10D
@@ -88,7 +88,7 @@ profiles:
 ```
 ## Dependencies
 
-Ansible 2.2 or later
+Ansible 2.5 or later
 
 GPL v3 License
 aizquierdo@mrmilu.com
