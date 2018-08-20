@@ -30,7 +30,7 @@
 
 - name: parse duplicity version
   set_fact:
-    _duplicity_version: "{{ _duplicity_status.split()[1] is version(mrbackup_duplicity_version, '>=') }}"
+    _duplicity_version: "{{ _duplicity_status.stdout.split()[1] is version(mrbackup_duplicity_version, '>=') }}"
 
 - import_tasks: install.yml
   when: _duplicity_version or mrbackup_force_install
