@@ -31,8 +31,8 @@
 - name: parse duplicity version
   set_fact:
     _duplicity_version: >
-      {{ _duplicity_status.stdout.split()[1] is version(mrbackup_duplicity_version, '>=') if
-      _duplicity_status == 0 else True }}
+      {{ _duplicity_status.stdout.split()[1] is not version(mrbackup_duplicity_version, '>=') if
+      _duplicity_status.rc == 0 else True }}
 
 - import_tasks: install.yml
   when: not _duplicity_version or mrbackup_force_install
