@@ -35,7 +35,7 @@
       _duplicity_status == 0 else True }}
 
 - import_tasks: install.yml
-  when: _duplicity_version or mrbackup_force_install
+  when: not _duplicity_version or mrbackup_force_install
 
 - name: uninstall compiler (for security best-practices)
   apt:
