@@ -3,6 +3,7 @@
   apt:
     name: "{{ item }}"
     state: "present"
+    update_cache: yes
   with_items:
   - cron
   - gzip
@@ -30,9 +31,7 @@
 
 - name: parse duplicity version
   set_fact:
-    _duplicity_version: >
-      {{ _duplicity_status.stdout.split()[1] is not version(mrbackup_duplicity_version, '>=') if
-      _duplicity_status.rc == 0 else True }}
+    _duplicity_version: "{{ (_duplicity_status.stdout.split()[1] is not version(mrbackup_duplicity_version, '>=')) if _duplicity_status.rc == 0 else True }}"
 
 - import_tasks: install.yml
   when:
