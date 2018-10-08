@@ -1,0 +1,17 @@
+- hosts: localhost
+  tasks:
+    - name: Create and start container
+      lxd_container:
+        name: roletest
+        state: started
+        devices:
+        source:
+          type: image
+          server: https://cloud-images.ubuntu.com/releases
+          protocol: simplestreams
+          alias: "16.04"
+        profiles: ["default"]
+        wait_for_ipv4_addresses: true
+        timeout: 600
+
+- import_playbook: test.yml
