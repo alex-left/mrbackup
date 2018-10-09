@@ -73,5 +73,7 @@ profiles:
   max_full_with_incr: 1
   mysql_user: root
   mysql_pass: test
+  # enable if you want do a compressed dump with gz (only for postgres/mysql)
+  compressed: no
   extra_params:
   - ""

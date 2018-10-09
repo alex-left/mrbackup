@@ -6,27 +6,38 @@
 WORKDIR={{backup.work}}/{{item.name}}
 
 {% if item.source.startswith('postgresql://') %}
-
 DBNAME={{item.source.split('postgresql://')[-1]}}
+    {% if item.compressed | default(False) %}
+PGPASSWORD="{{item.postgres_pass}}" pg_dump -U {{item.postgres_user|default(postgres.postgres_user)}} -h {{item.postgres_host}} -p {{item.postgres_port}} -c $DBNAME | gzip > ${WORKDIR}/dump.gz
+    {% else %}
 PGPASSWORD="{{item.postgres_pass}}" pg_dump -U {{item.postgres_user|default(postgres.postgres_user)}} -h {{item.postgres_host}} -p {{item.postgres_port}} -c $DBNAME -f ${WORKDIR}/dump
+    {% endif %}
 
 {% elif item.source.startswith('mysql://') %}
 
-{% if item.source == 'mysql://' %}
+    {% if item.source == 'mysql://' %}
 # Dump all databases
+        {% if item.compressed | default(False) %}
+mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} --all-databases | gzip > ${WORKDIR}/dump.gz
+        {% else %}
 mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} --all-databases > ${WORKDIR}/dump
-{% else %}
-
+        {% endif %}
+    {% else %}
 # Dump the passed database
 DBNAME={{item.source.split('mysql://')[-1]}}
+        {% if item.compressed | default(False) %}
+mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} -h {{item.mysql_host|default(mysql.mysql_host)}} -P {{item.mysql_port|default(mysql.mysql_port)}} $DBNAME  | gzip > ${WORKDIR}/dump.gz
+        {% else %}
 mysqldump -u {{item.mysql_user|default(mysql.mysql_user)}} -p{{item.mysql_pass|default(mysql.mysql_pass)}} -h {{item.mysql_host|default(mysql.mysql_host)}} -P {{item.mysql_port|default(mysql.mysql_port)}} $DBNAME  > ${WORKDIR}/dump
-{% endif %}
+        {% endif %}
+    {% endif %}
 
 {% elif item.source.startswith('mongo://') %}
 
 mongodump --out $WORKDIR/dump
 
 {% endif %}
+
 # create and export lxd image
 {% if item.source.startswith('lxd://') %}
 CONTAINER={{ item.source.split('lxd://')[-1] }}

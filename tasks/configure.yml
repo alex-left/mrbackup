@@ -21,23 +21,23 @@
   with_items: "{{profiles}}"
 
 - name: Configure profiles
-  template: src=conf.j2 dest={{backup.home}}/{{item.name}}/conf owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}}
+  template: src=conf.j2 dest={{backup.home}}/{{item.name}}/conf owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}} trim_blocks=False
   with_items: "{{profiles}}"
 
 - name: Configure exclude lists
-  template: src=exclude.j2 dest={{backup.home}}/{{item.name}}/exclude owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}}
+  template: src=exclude.j2 dest={{backup.home}}/{{item.name}}/exclude owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}} trim_blocks=False
   with_items: "{{profiles}}"
 
 - name: Configure pre scripts
-  template: src=pre.j2 dest={{backup.home}}/{{item.name}}/pre owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}}
+  template: src=pre.j2 dest={{backup.home}}/{{item.name}}/pre owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}} trim_blocks=False
   with_items: "{{profiles}}"
 
 - name: Configure post scripts
-  template: src=post.j2 dest={{backup.home}}/{{item.name}}/post owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}}
+  template: src=post.j2 dest={{backup.home}}/{{item.name}}/post owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}} trim_blocks=False
   with_items: "{{profiles}}"
 
 - name: Configure restore scripts
-  template: src=restore.j2 dest={{backup.home}}/{{item.name}}/restore owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}}
+  template: src=restore.j2 dest={{backup.home}}/{{item.name}}/restore owner={{item.user|default(backup.user)}} group={{item.group|default(backup.group)}} trim_blocks=False
   with_items: "{{profiles}}"
 
 - name: Create work directories
